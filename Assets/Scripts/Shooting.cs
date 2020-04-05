@@ -3,13 +3,14 @@ using System.Collections;
 
 public class Shooting : MonoBehaviour
 {
-
+	float time = 0f;
+	public float waitTime = 0.5f;
 	public float speed = 10; // скорость пули
 	public Rigidbody2D bullet; // префаб нашей пули
 	public Transform gunPoint; // точка рождения
 	public float fireRate = 1; // скорострельность
-
-
+	private Transform pos;
+	float addForce = 10f;
 	// ограничение вращения
 	public float minAngle = -40;
 	public float maxAngle = 40;
@@ -32,9 +33,11 @@ public class Shooting : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		time += Time.deltaTime;
+		if (waitTime <= time)
 		{
 			Fire();
+			time = time - waitTime;
 		}
 		else
 		{
@@ -44,6 +47,7 @@ public class Shooting : MonoBehaviour
 
 	void Fire()
 	{
+		pos = gunPoint;
 		curTimeout += Time.deltaTime;
 		if (curTimeout > fireRate)
 		{
@@ -51,6 +55,7 @@ public class Shooting : MonoBehaviour
 			Rigidbody2D clone = Instantiate(bullet, gunPoint.position, Quaternion.identity) as Rigidbody2D;
 			clone.velocity = transform.TransformDirection(gunPoint.up * speed);
 			clone.transform.up = gunPoint.up;
+			clone.transform.position = new Vector2(clone.position.x, clone.position.y + 0.9f);
 		}
 	}
 }

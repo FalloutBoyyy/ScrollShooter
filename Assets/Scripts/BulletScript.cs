@@ -3,30 +3,33 @@ using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
 
-public class Bullet2D : MonoBehaviour
+public class BulletScript : MonoBehaviour
 {
-
+	float time = 0f;
+	float waitTime = 10f;
 	void Start()
 	{
-		// уничтожить объект по истечению указанного времени (секунд), если пуля никуда не попала
-		Destroy(gameObject, 20);
-	}
-
-	void OnTriggerEnter2D(Collider2D coll)
-	{
-		if (!coll.isTrigger) // чтобы пуля не реагировала на триггер
+		if(name != "Laser")
 		{
-			switch (coll.tag)
-			{
-				case "Enemy_1":
-					// что-то...
-					break;
-				case "Enemy_2":
-					// что-то еще...
-					break;
-			}
-
-			Destroy(gameObject);
+			Destroy(gameObject, 5);
 		}
 	}
+
+
+	private void Update()
+	{
+		time += Time.deltaTime;
+		if (waitTime <= time)
+		{
+
+			time = time - waitTime;
+		}
+
+		void OnCollisionEnter2D(Collision2D obj)
+		{
+			if (obj.collider.isTrigger)
+				Destroy(gameObject);
+		}
+
+	}	
 }
