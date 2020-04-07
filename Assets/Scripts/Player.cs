@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-
+using System.Collections;
+using System.Collections.Generic;
 
 /// Контроллер и поведение игрока ///
 public class Player : MonoBehaviour

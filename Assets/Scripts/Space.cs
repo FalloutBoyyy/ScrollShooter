@@ -2,27 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Space : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    public float speed = 5f;
-    // Start is called before the first frame update
+    public Rigidbody2D space;
+    public Transform spnPos; 
+    public float speed = -10f;
+    bool trig = true;
+    float followY = 0f;
+    Rigidbody2D clone;
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-    }
+        clone = Instantiate(space, spnPos.position, Quaternion.identity) as Rigidbody2D;
+        clone.transform.position = new Vector2(clone.position.x, clone.position.y);
 
-    // Update is called once per frame
+    }
     void Update()
     {
-        rb.MovePosition(rb.position + Vector2.down * speed * Time.deltaTime);
+        space.velocity = transform.TransformDirection(spnPos.up * speed);
+        space.transform.up = spnPos.up;
+        clone.velocity = transform.TransformDirection(spnPos.up * speed);
+        clone.transform.up = spnPos.up;
+        if (space.position.y <= -15)
+        {
+            space.transform.position = new Vector3(0, 15f, 0);
+            
+        }
+        if (clone.position.y <= -15)
+        {
+            clone.transform.position = new Vector3(0, 15f, 0);
+
+        }
+
     }
 
-    void OnBecameInvisible()
-    {
-        //уничтожить объект
-        Destroy(gameObject);
-    }
 
 }

@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Shooting : MonoBehaviour
 {
 	float time = 0f;
 	public float waitTime = 0.5f;
+
 	public float speed = 10; // скорость пули
 	public Rigidbody2D bullet; // префаб нашей пули
 	public Transform gunPoint; // точка рождения
 	public float fireRate = 1; // скорострельность
+
 	private Transform pos;
 	float addForce = 10f;
 	// ограничение вращения
