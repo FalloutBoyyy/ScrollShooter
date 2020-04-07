@@ -7,7 +7,7 @@ public class Shooting : MonoBehaviour
 	float time = 0f;
 	public float waitTime = 0.5f;
 
-	public float speed = 10; // скорость пули
+	public float speed = 10f; // скорость пули
 	public Rigidbody2D bullet; // префаб нашей пули
 	public Transform gunPoint; // точка рождения
 	public float fireRate = 1; // скорострельность
@@ -24,15 +24,7 @@ public class Shooting : MonoBehaviour
 	{
 	}
 
-	void SetRotation()
-	{
-		Vector3 mousePosMain = Input.mousePosition;
-		mousePosMain.z = Camera.main.transform.position.z;
-		Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePosMain);
-		lookPos = lookPos - transform.position;
-		float angle = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
-		angle = Mathf.Clamp(angle, minAngle, maxAngle);
-	}
+
 
 	void Update()
 	{
@@ -58,7 +50,6 @@ public class Shooting : MonoBehaviour
 			Rigidbody2D clone = Instantiate(bullet, gunPoint.position, Quaternion.identity) as Rigidbody2D;
 			clone.velocity = transform.TransformDirection(gunPoint.up * speed);
 			clone.transform.up = gunPoint.up;
-			clone.transform.position = new Vector2(clone.position.x, clone.position.y + 0.9f);
 		}
 	}
 }
